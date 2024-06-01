@@ -1,21 +1,20 @@
 package ru.netology;
 
 import com.codeborne.selenide.Condition;
+
+import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.open;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import java.nio.file.Path;
 import java.time.Duration;
-import static com.codeborne.selenide.Selenide.$;
 import static ru.netology.DataGenerator.Registration.getValidUser;
 import static ru.netology.DataGenerator.Registration.getUser;
 import static ru.netology.DataGenerator.randomLogin;
 import static ru.netology.DataGenerator.randomPwd;
-import static java.nio.channels.FileChannel.open;
 
 
-class LoginTest {
+public class LoginTest {
 
     @BeforeEach
     void setUp() {
@@ -26,9 +25,9 @@ class LoginTest {
     @DisplayName("Successfully login with valid active user")
     void successLoginIfUserValidActive() {
         var validUser = getValidUser("active");
-        $("[data-test-id='login'] input").setValue(validUser.getLogin());
-        $("[data-test-id='password'] input").setValue(validUser.getPassword());
-        $("button.button").click();
+        $("input[name='login']").setValue(validUser.getLogin());
+        $("input[name='password']").setValue(validUser.getPassword());
+        $("button[data-test-id='action-login']").click();
         $("h2").shouldHave(Condition.exactText("Личный кабинет")).shouldBe(Condition.visible);
     }
 
